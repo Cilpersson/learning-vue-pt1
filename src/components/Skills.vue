@@ -8,12 +8,27 @@
           v-model="skill"
           name="skill"
         />
-        <p class="alert" v-if="skillMoreThanFive">
-          {{ error }}
-        </p>
+        <transition
+          name="alert-in"
+          enter-active-class="animated flipInX"
+          leave-active-class="animated flipOutX"
+        >
+          <p class="alert" v-if="skillMoreThanFive">
+            {{ error }}
+          </p>
+        </transition>
       </form>
       <ul>
-        <li v-for="(skill, index) in skills" :key="index">{{ skill.skill }}</li>
+        <!-- <transition-group
+          name="list"
+          enter-active-class="animated bounceInUp"
+          leave-active-class="animated bounceOutDown"
+        > -->
+        <li v-for="(skill, index) in skills" :key="index + 0">
+          {{ skill.skill }}
+          <button @click="removeSkill(index)">remove</button>
+        </li>
+        <!-- </transition-group> -->
       </ul>
       <p>These are the skills that you possess</p>
     </div>
@@ -48,10 +63,10 @@ export default {
       if (this.skill.length >= 5) {
         this.skills.push({ skill: this.skill });
         this.skill = "";
-        this.error = "";
-      } else {
-        this.error = "Min length of skill must be 5 characters";
       }
+    },
+    removeSkill(index) {
+      this.skills.splice(index, 1);
     },
   },
 };
@@ -59,6 +74,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+@import "https://cdn.jsdelivr.net/npm/animate.css@3.5.1";
 .holder {
   background: #fff;
 }
@@ -95,5 +111,36 @@ input {
   font-size: 1.3em;
   background-color: #323333;
   color: #687f7f;
+}
+.alert {
+  background: #fdf2ce;
+
+  font-weight: bold;
+  text-align: center;
+
+  width: fit-content;
+
+  padding: 5px;
+  margin: 20px auto;
+}
+
+.alert-in-enter-active {
+  animation: bounce-in 0.75s;
+}
+
+.alert-in-leave-active {
+  animation: bounce-in 0.75s reverse;
+}
+
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 </style>
