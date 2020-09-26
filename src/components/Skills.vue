@@ -19,16 +19,12 @@
         </transition>
       </form>
       <ul>
-        <!-- <transition-group
-          name="list"
-          enter-active-class="animated bounceInUp"
-          leave-active-class="animated bounceOutDown"
-        > -->
-        <li v-for="(skill, index) in skills" :key="index + 0">
-          {{ skill.skill }}
-          <button @click="removeSkill(index)">remove</button>
-        </li>
-        <!-- </transition-group> -->
+        <transition-group name="list" enter-active-class="animated bounceInUp">
+          <li v-for="(skill, index) in skills" :key="index + 0">
+            {{ skill.skill }}
+            <i class="fa fa-minus-circle" @click="removeSkill(index)"></i>
+          </li>
+        </transition-group>
       </ul>
       <p>These are the skills that you possess</p>
     </div>
@@ -75,6 +71,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 @import "https://cdn.jsdelivr.net/npm/animate.css@3.5.1";
+@import "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css";
 .holder {
   background: #fff;
 }
@@ -137,10 +134,15 @@ input {
     transform: scale(0);
   }
   50% {
-    transform: scale(1.5);
+    transform: scale(1.1);
   }
   100% {
     transform: scale(1);
   }
+}
+
+i {
+  float: right;
+  cursor: pointer;
 }
 </style>
